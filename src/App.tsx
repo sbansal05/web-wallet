@@ -14,13 +14,13 @@ function App() {
   const [solWallet, setSolWallet] = useState<Keypair[]>([]);
   const [solanaIdx, setSolanaIdx] = useState(0);
   const [ethIdx, setEthIdx] = useState(0);
-  const [CopyButtonClicked, setCopyButtonClicked] = useState(false);
+  const [copyButtonClicked, setCopyButtonClicked] = useState(false);
 
   const getMnemonic = () => {
-    const mnemonic = generateMnemonic()
-    setMnemonic(mnemonic)
+    const mnemonic = generateMnemonic();
+    setMnemonic(mnemonic);
     setCopyButtonClicked(false);
-  }
+  };
 
   const generateSolanaWallet = (mnemonic: string) => {
     if(mnemonic =""){
@@ -50,14 +50,18 @@ function App() {
     const wallet = new Wallet(privateKey);
     setEthIdx(ethIdx + 1);
     setEthWallet([...ethWallet, wallet]);
-
   }
+  const copyMnemonic = async () => {
+    if (mnemonic === "") return;
+    await navigator.clipboard.writeText(mnemonic);
+    setCopyButtonClicked(true);
+  };
 
-  return (
-    <>
-     
-    </>
+  return ( 
+  <>
+  </>
   )
+  
 }
 
 export default App
