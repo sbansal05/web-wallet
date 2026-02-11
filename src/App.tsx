@@ -6,6 +6,17 @@ import { Wallet } from 'ethers';
 import { derivePath } from 'ed25519-hd-key';
 import nacl from 'tweetnacl';
 import { HDNodeWallet } from 'ethers';
+import Title from './components/Title';
+import WalletSwitcher from './components/WalletSwitcher';
+import { Button } from './components/ui/button';
+import { Input } from './components/ui/input';
+import { Tooltip as ReactTooltip} from "react-tooltip";
+import CopyButton from './components/CopyButton';
+import { CheckIcon } from './components/icons/tabler-check';
+import { EyeIcon } from './components/icons/tabler-eye';
+import SolanaWallet from './components/Solana/SolanaWallet';
+import EthereumWallet from './components/Ethereum/EthereumWallet';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const [mnemonic, setMnemonic] = useState("");
@@ -51,15 +62,22 @@ function App() {
     setEthIdx(ethIdx + 1);
     setEthWallet([...ethWallet, wallet]);
   }
-  const copyMnemonic = async () => {
-    if (mnemonic === "") return;
-    await navigator.clipboard.writeText(mnemonic);
-    setCopyButtonClicked(true);
-  };
+  
 
   return ( 
-  <>
-  </>
+  <div className='flex w-full overflow-hidden min-h-screen items-center felx-col bg-slate-900'>
+    <Title />
+    <WalletSwitcher setWalletType={setWallet}/>
+    <Button className='py-2 px-4 rounded w-[80%] border-slate-200 border-3' aria-label='Generate Mnemonic' onClick={getMnemonic} />
+    <div className='flex py-2 px-4 w-[80%]'>
+      <Input className='py-2 w-full px-4 outline-none font-2xl' value={mnemonic}></Input>
+      {mnemonic && copyButtonClicked ? <CopyButton className='bg-white border-0 px-2 hover:text-gray-600 duration-300' name={mnemonic} label={<CheckIcon />} /> : <CopyButton className='bg-white border-0 px-2 hover: text-gray-500 duration-300' name={mnemonic} label={<EyeIcon />} setState={setCopyButtonClicked} />}
+      <Button className='py-2 px-4 rounded-r' {...wallet === "solana" ? {onClick: () => generateSolanaWallet(mnemonic)} : {onClick: () => generateEthWallet(mnemonic)}} aria-label='Generate Wallet'/>
+    </div> 
+    {wallet === 'solana' ? <SolanaWallet solanaWallets={solWallet}/> : <EthereumWallet ethereumWallets={ethWallet}/>}
+    <ReactTooltip className="translate-y-5" id="copy-button"/> 
+    <ToastContainer/>
+  </div>
   )
   
 }
