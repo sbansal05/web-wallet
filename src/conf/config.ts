@@ -1,2 +1,2 @@
-export const solanaUrl = "";
-export const ethUrl = "";
+export const solanaUrl = process.env.SOL_URL;
+export const ethUrl = process.env.ETH_URL;
