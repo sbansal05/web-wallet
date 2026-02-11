@@ -64,7 +64,7 @@ function App() {
     <div className="dark min-h-screen bg-[#0f111b] text-white">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-6 px-4 py-8 md:px-8">
         <Title />
-        <WalletSwitcher selectedWallet={wallet} setWalletType={setWallet} />
+        <WalletSwitcher setWalletType={setWallet} />
 
         <Card className="w-full border-white/20 bg-[#171a25] text-white">
           <CardContent className="space-y-4">

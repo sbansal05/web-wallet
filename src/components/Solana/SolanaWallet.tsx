@@ -2,6 +2,7 @@ import type { Keypair } from "@solana/web3.js"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import SolanaAddress from "./SolanaAddress"
 import SolanaPrivateKey from "./SolanaPrivateKey"
+import SolanaBalance from "./SolanaBalance"
 
 const SolanaWallet= ({solanaWallets} : {solanaWallets: Keypair[]}) => {
     return (
@@ -23,6 +24,7 @@ const SolanaWallet= ({solanaWallets} : {solanaWallets: Keypair[]}) => {
                     <CardContent className="space-y-4 pt-4">
                         <SolanaAddress publicKey={key.publicKey} />
                         <SolanaPrivateKey secretKey={key.secretKey} />
+                        <SolanaBalance address={key.publicKey.toBase58()} />
                     </CardContent>
                 </Card>
             ))}

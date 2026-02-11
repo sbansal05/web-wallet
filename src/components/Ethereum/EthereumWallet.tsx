@@ -2,6 +2,7 @@ import { Wallet } from "ethers"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import EthereumAddress from "./EthereumAddress"
 import EthereumPrivateKey from "./EthereumPrivateKey"
+import EthereumBalance from "./EthereumBalance"
 
 const EthereumWallet = ({ ethereumWallets }: { ethereumWallets: Wallet[] }) => {
   return (
@@ -24,6 +25,7 @@ const EthereumWallet = ({ ethereumWallets }: { ethereumWallets: Wallet[] }) => {
           <CardContent className="space-y-4 pt-4">
             <EthereumAddress address={key.address} />
             <EthereumPrivateKey privateKey={key.privateKey} />
+            <EthereumBalance address={key.address}/>
           </CardContent>
         </Card>
       ))}
