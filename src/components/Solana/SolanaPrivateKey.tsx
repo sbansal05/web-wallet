@@ -1,28 +1,42 @@
 import { useState } from "react";
-import { Card, CardContent } from "../ui/card";
 import CopyButton from "../CopyButton";
 import { CheckIcon } from "../icons/tabler-check";
-import { EyeIcon } from "../icons/tabler-eye";
+import { CopyIcon } from "../icons/lucide-copy";
 import ViewButton from "../ViewButton";
 
 const SolanaPrivateKey = ({secretKey} : {secretKey: Uint8Array}) => {
     const [privateKeyCopied, setPrivateKeyCopied] = useState(false);
     const [privateKeyViewed, setPrivateKeyViewed] = useState(false);
+    const privateKey = Buffer.from(secretKey).toString('base64')
 
     return (
-        <Card>
-            <CardContent>
-                <div>
-                    <span className="font-bold text-2xl">Wallet Private Key:</span>
-                    {privateKeyViewed ? <span className="ml-2">{Buffer.from(secretKey).toString('base64')}</span> : <span className="ml-2">........................</span>}
-                </div>
-                <div>
-                    {privateKeyCopied ? <CopyButton name={Buffer.from(secretKey).toString('base64')} label={<CheckIcon />} setState={setPrivateKeyCopied} className="border-0 px-2 hover:text-gray-500 duration-300" /> : <CopyButton name={Buffer.from(secretKey).toString('base64')} label={<EyeIcon />} setState={setPrivateKeyCopied} className="border-0 px-2 hover:text-gray-500 duration-300"/>}
-                    <ViewButton setState={setPrivateKeyViewed} state = {privateKeyViewed} />
-                </div>
-            </CardContent>
-        </Card>
-    )
+        <div className="flex items-start justify-between gap-4 rounded-md border border-white/10 bg-[#10131d] p-3">
+            <div className="min-w-0">
+                <p className="text-sm font-semibold text-white/90">Wallet Private Key</p>
+                <p className="break-all text-sm text-white/80">
+                {privateKeyViewed ? privateKey : '************************'}
+                </p>
+            </div>
+            <div className="flex items-center gap-2">
+                {privateKeyCopied ? (
+                <CopyButton
+                    name={privateKey}
+                    label={<CheckIcon />}
+                    setState={setPrivateKeyCopied}
+                    className="cursor-pointer text-white"
+                />
+                ) : (
+                <CopyButton
+                    name={privateKey}
+                    label={<CopyIcon size={20} />}
+                    setState={setPrivateKeyCopied}
+                    className="cursor-pointer text-white"
+                />
+                )}
+                <ViewButton setState={setPrivateKeyViewed} state={privateKeyViewed} />
+            </div>
+        </div>
+  )
 }
 
 export default SolanaPrivateKey

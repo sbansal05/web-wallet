@@ -1,29 +1,44 @@
-import { PublicKey } from "@solana/web3.js";
-import { Card, CardContent,  } from "../ui/card";
-import { CheckIcon } from "../icons/tabler-check";
-import { EyeIcon } from "../icons/tabler-eye";
-import { useState } from "react";
-import CopyButton from "../CopyButton";
-import ViewButton from "../ViewButton";
+import { PublicKey } from '@solana/web3.js'
+import { useState } from 'react'
+import CopyButton from '../CopyButton'
+import { CheckIcon } from '../icons/tabler-check'
+import { CopyIcon } from '../icons/lucide-copy'
+import ViewButton from '../ViewButton'
 
-const SolanaAddress = ({publicKey} : {publicKey : PublicKey}) => {
-    const [addressViewed, setAddressViewed] = useState(false)
-    const [addressCopied, setAddressCopied] = useState(false)
+const SolanaAddress = ({ publicKey }: { publicKey: PublicKey }) => {
+  const [addressViewed, setAddressViewed] = useState(false)
+  const [addressCopied, setAddressCopied] = useState(false)
 
-    return (
-        <Card className="w-full max-w-sm">
-            <CardContent>
-                <div>
-                    <span className="font-bold text-2xl">Wallet Address:</span>
-                    {addressViewed ? <span className="ml-2">{publicKey.toBase58()}</span> : <span className="ml-2">........................</span>}
-                </div>
-                <div>
-                    {addressCopied ? <CopyButton name={publicKey.toBase58()} label={<CheckIcon />} setState={setAddressCopied} className="border-0 px-2 hover:text-gray-500 duration-300"/> : <CopyButton name={publicKey.toBase58()} label={<EyeIcon />} setState={setAddressCopied} className="border-0 px-2 hover:text-gray-500 duration-300"/>}
-                    <ViewButton setState={setAddressViewed} state={addressViewed} />
-                </div>
-            </CardContent>
-        </Card>
-    )
+  const value = publicKey.toBase58()
+
+  return (
+    <div className="flex items-start justify-between gap-4 rounded-md border border-white/10 bg-[#10131d] p-3">
+      <div className="min-w-0">
+        <p className="text-sm font-semibold text-white/90">Wallet Address</p>
+        <p className="break-all text-sm text-white/80">
+          {addressViewed ? value : '************************'}
+        </p>
+      </div>
+      <div className="flex items-center gap-2">
+        {addressCopied ? (
+          <CopyButton
+            name={value}
+            label={<CheckIcon />}
+            setState={setAddressCopied}
+            className="cursor-pointer text-white"
+          />
+        ) : (
+          <CopyButton
+            name={value}
+            label={<CopyIcon size={20} />}
+            setState={setAddressCopied}
+            className="cursor-pointer text-white"
+          />
+        )}
+        <ViewButton setState={setAddressViewed} state={addressViewed} />
+      </div>
+    </div>
+  )
 }
 
 export default SolanaAddress

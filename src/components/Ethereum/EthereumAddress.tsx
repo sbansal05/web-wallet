@@ -1,26 +1,41 @@
 import { useState } from "react"
-import { Card, CardContent } from "../ui/card";
 import CopyButton from "../CopyButton";
 import { CheckIcon } from "../icons/tabler-check";
 import ViewButton from "../ViewButton";
-import { EyeIcon } from "../icons/tabler-eye";
+import { CopyIcon } from "../icons/lucide-copy";
 
 const EthereumAddress = ({address}: {address: string}) => {
     const [addressCopied, setAddressCopied] = useState(false);
     const [addressViewed, setAddressViewed] = useState(false);
     return (
-        <Card className="w-full max-w-sm">
-            <CardContent>
-                <div>
-                    <span className="font-bold text-2xl">Wallet Address:</span>
-                    {addressViewed ? <span className="ml-2">{address}</span> : <span className="ml-2">........................</span>}
-                </div>
-                <div>
-                    {addressCopied ? <CopyButton name={address} label={<CheckIcon />} setState={setAddressCopied} className="border-0 px-2 hover:text-gray-500 duration-300"/> : <CopyButton name={address} label={<EyeIcon />} setState={setAddressCopied} className="border-0 px-2 hover:text-gray-500 duration-300"/>}
-                    <ViewButton setState={setAddressViewed} state={addressViewed} />
-                </div>
-            </CardContent>
-        </Card>
-    )
+        <div className="flex items-start justify-between gap-4 rounded-md border border-white/10 bg-[#10131d] p-3">
+      <div className="min-w-0">
+        <p className="text-sm font-semibold text-white/90">Wallet Address</p>
+        <p className="break-all text-sm text-white/80">
+          {addressViewed ? address : '************************'}
+        </p>
+      </div>
+      <div className="flex items-center gap-2">
+        {addressCopied ? (
+          <CopyButton
+            name={address}
+            label={<CheckIcon />}
+            setState={setAddressCopied}
+            className="cursor-pointer text-white"
+          />
+        ) : (
+          <CopyButton
+            name={address}
+            label={<CopyIcon size={20} />}
+            setState={setAddressCopied}
+            className="cursor-pointer text-white"
+          />
+        )}
+        <ViewButton setState={setAddressViewed} state={addressViewed} />
+      </div>
+    </div>
+  )
 }
+    
+
 export default EthereumAddress

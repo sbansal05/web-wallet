@@ -6,9 +6,9 @@ const WalletSwitcher = ({setWalletType} : {setWalletType: any}) => {
     }
 
     return (
-        <div className="flex p-4">
-            <Button aria-label="Solana" onClick={() => handleClick('solana')} className="border-r-3 border-r-black-600 px-6 py-2"/>
-            <Button name={"Ethereum"} onClick={() => handleClick('ethereum')} className="border-r-3 border-r-black-600 px-6 py-2"/>
+        <div className="flex overflow-hidden rounded-md border border-white/20 bg-[#1f2333]">
+            <Button aria-label="Solana" onClick={() => handleClick('solana')} className="h-11 rounded-none border-r border-white/20 px-8 text-sm font-semibold">Solana</Button>
+            <Button aria-label="Ethereum" onClick={() => handleClick('ethereum')} className="h-11 rounded-none border-r border-white/20 px-8 text-sm font-semibold">Ethereum</Button>
         </div>
     )
 }
